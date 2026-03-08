@@ -1,0 +1,25 @@
+# Logs
+logs
+*.log
+
+# Node
+node_modules/
+
+# Production
+dist/
+
+# IDE / Editor
+.vscode/*
+
+# Env
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# OS
+.DS_Store
+
+# TypeScript
+*.tsbuildinfo

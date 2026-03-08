@@ -6,7 +6,10 @@ A responsive web application for visualizing your Splitwise shared expenses. It 
 
 _Mostly vibe coded in a day, because of course._
 
-![Desktop View](./public/overview.png)
+![Desktop View](./assets/overview.png)
+
+Fully responsive mobile-friendly view, with drag&drop features rethought as tap-and-tap:
+![Mobile View](./assets/mobile_overview.png)
 
 ## Main features
 
@@ -40,13 +43,13 @@ npm run dev
 ### 1. Dashboard: Global Stats & Members Summary
 
 Get a quick top-level summary of the total expenses and individual member balances.
-![Dashboard](./public/dashboard.png)
+![Dashboard](./assets/dashboard.png)
 
 ### 2. Categories: rename and merge as you please
 
 Categories from CSV can be messy, so you can rename and merge them to get a cleaner overview in the next sections.
 
-![Categories](./public/categories.png)
+![Categories](./assets/categories.png)
 
 ### 3. Transactions Table
 
@@ -59,7 +62,7 @@ Date,Description,Category,Cost,Currency,Alice,Bob,Charlie,Diana
 2024-06-25,Grocery run,Groceries,98.50,USD,55.03,0.00,-42.69,-12.34
 ```
 
-![Transactions](./public/transactions.png)
+![Transactions](./assets/transactions.png)
 
 ### 4. Analytics
 
@@ -68,16 +71,16 @@ Get insights into the expenses with a variety of widgets:
 - **Time Range Filter**: Slide through different time periods to filter the entire dashboard. The charts, stats, and tables will instantly update to reflect only the selected time range.
 
 - **Global overview**: see category breakdown pie charts, and member net balance distributions. (Note that data and plots can be always be merged by enabling currency conversion)
-  ![analytics_overview](./public/analytics_overview.png)
+  ![analytics_overview](./assets/analytics_overview.png)
 
 - **Category insights**: show category totals as a table, trends of each category, and who pays for what.
-  ![analytics_categories](./public/analytics_categories.png)
+  ![analytics_categories](./assets/analytics_categories.png)
 
 - **Member insights**: for each member, show their total expenses, their distributions, trends over time, and how they compare to the group.
-  ![analytics_members](./public/analytics_members.png)
+  ![analytics_members](./assets/analytics_members.png)
 
 - **Group fairness**: show how fair the expenses are distributed among the group members.
-  ![analytics_fairness](./public/analytics_fairness.png)
+  ![analytics_fairness](./assets/analytics_fairness.png)
 
 ## 💱 Currency Conversion
 

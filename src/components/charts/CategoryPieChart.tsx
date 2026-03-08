@@ -200,7 +200,7 @@ export const CategoryPieChart = () => {
       )}
 
       <Box sx={{ height: 300, mt: 1 }}>
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height="100%" minWidth={0}>
           <PieChart>
             <Pie
               data={chartData}

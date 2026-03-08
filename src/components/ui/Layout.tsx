@@ -469,7 +469,8 @@ export const Layout = ({ children, currentPage, onPageChange }: LayoutProps) => 
         component="main"
         sx={{
           flexGrow: 1,
-          width: { md: `calc(100% - ${DRAWER_WIDTH}px)` },
+          width: { xs: '100%', md: `calc(100% - ${DRAWER_WIDTH}px)` },
+          minWidth: 0,
           minHeight: '100vh',
           pt: { xs: 8, md: 0 },
         }}

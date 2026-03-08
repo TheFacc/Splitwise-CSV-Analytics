@@ -264,7 +264,7 @@ export const MemberCategoryChart: React.FC<MemberCategoryChartProps> = ({
         </Box>
       ) : (
         <Box sx={{ height: Math.max(220, chartData.length * (compareWithGroup ? 45 : 30)) }}>
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer width="100%" height="100%" minWidth={0}>
             <BarChart
               data={chartData}
               margin={{ top: 10, right: 10, left: 0, bottom: 5 }}

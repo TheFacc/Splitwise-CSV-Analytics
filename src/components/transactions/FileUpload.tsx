@@ -89,6 +89,7 @@ export const FileUpload = () => {
       <Paper
         sx={{
           p: 3,
+          mb: 4,
           background: 'linear-gradient(135deg, rgba(72, 190, 157, 0.1) 0%, rgba(72, 190, 157, 0.05) 100%)',
           border: '1px solid',
           borderColor: 'primary.main',

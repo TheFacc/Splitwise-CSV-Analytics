@@ -179,7 +179,7 @@ export const NetBalanceBarChart: React.FC<NetBalanceBarChartProps> = ({
       )}
 
       <Box sx={{ height: chartHeight, width: '100%' }}>
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height="100%" minWidth={0}>
           <BarChart
             data={chartData}
             layout="vertical"

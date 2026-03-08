@@ -182,7 +182,7 @@ export const CounterpartyBreakdown: React.FC<CounterpartyBreakdownProps> = ({
       )}
 
       <Box sx={{ height: chartHeight, width: '100%' }}>
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height="100%" minWidth={0}>
           <BarChart
             data={chartData}
             layout="vertical"

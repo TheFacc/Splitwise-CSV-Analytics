@@ -683,7 +683,9 @@ export const TimeRangeSlider = () => {
       <Box
         sx={{
           display: 'flex',
-        //   gap: 3,
+          flexWrap: 'wrap',
+          gap: 1,
+          alignItems: 'center',
         //   mb: 2,
         //   p: 2,
         //   bgcolor: 'rgba(72, 190, 157, 0.1)',
@@ -705,7 +707,7 @@ export const TimeRangeSlider = () => {
 
       {/* Top Chart (Zoomed View) - supports drag-to-select */}
       <Box sx={{ height: 140, mb: 1, cursor: isDragging ? 'col-resize' : 'crosshair' }}>
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height="100%" minWidth={0}>
           {chartType === 'area' ? (
           <AreaChart 
             data={normalizedChartData} 
@@ -925,7 +927,7 @@ export const TimeRangeSlider = () => {
       >
         {/* Background: Full Trend Line */}
         <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 1 }}>
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer width="100%" height="100%" minWidth={0}>
             <AreaChart
                data={normalizedChartData}
                margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
@@ -966,7 +968,7 @@ export const TimeRangeSlider = () => {
 
         {/* Foreground: Brush Control (Transparent) */}
         <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 2 }}>
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer width="100%" height="100%" minWidth={0}>
             <AreaChart
                data={normalizedChartData}
                margin={{ top: 0, right: 0, left: 0, bottom: 0 }}

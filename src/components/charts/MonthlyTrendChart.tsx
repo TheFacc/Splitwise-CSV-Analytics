@@ -160,7 +160,7 @@ export const MonthlyTrendChart = () => {
       )}
 
       <Box sx={{ height: 320, mt: 2 }}>
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height="100%" minWidth={0}>
           <BarChart data={chartData} margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
             <CartesianGrid
               strokeDasharray="3 3"

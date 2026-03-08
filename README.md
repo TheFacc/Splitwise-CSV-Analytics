@@ -2,7 +2,7 @@
 
 Analytics for your .csv Splitwise exports.
 
-A responsive web application for visualizing your Splitwise shared expenses. This project takes your standard Splitwise exports and turns them into clean, insightful charts and summaries, helping you truly understand where your money went and who owes what.
+A responsive web application for visualizing your Splitwise shared expenses. It takes your standard Splitwise exports and turns them into clean, insightful charts and summaries, helping you truly understand where your money went and who owes what. [Try it out](https://thefacc.github.io/Splitwise-CSV-Analytics/).
 
 _Mostly vibe coded in a day, because of course._
 
@@ -21,7 +21,7 @@ _Mostly vibe coded in a day, because of course._
 ## How to Use It
 
 1. Export your group or personal transactions from Splitwise (as a `.csv` file).
-2. Open the dashboard and click the upload area (or just click "Load sample data" to play around).
+2. Open the [dashboard](https://thefacc.github.io/Splitwise-CSV-Analytics/) and click the upload area (or just click "Load sample data" to play around).
 3. The app parses the data instantly in your browser.
 
 ### Hosting

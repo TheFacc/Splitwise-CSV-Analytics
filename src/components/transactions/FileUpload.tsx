@@ -16,7 +16,7 @@ export const FileUpload = () => {
   const loadSampleData = useCallback(async () => {
     setIsLoadingSample(true);
     try {
-      const response = await fetch('/sample-data.csv');
+      const response = await fetch(`${import.meta.env.BASE_URL}sample-data.csv`);
       if (!response.ok) throw new Error('Failed to load sample data');
       const text = await response.text();
       const blob = new Blob([text], { type: 'text/csv' });

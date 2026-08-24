@@ -87,6 +87,10 @@ export const translations = {
       subtitle: 'View all transactions',
       search: 'Search...',
       member: 'Member',
+      memberRole: 'Filter by',
+      roleAll: 'All (Involved)',
+      rolePaidBy: 'Paid by member',
+      roleOwedBy: 'Member share',
       category: 'Category',
       all: 'All',
       date: 'Date',
@@ -285,6 +289,10 @@ export const translations = {
       subtitle: 'Visualizza tutte le transazioni',
       search: 'Cerca...',
       member: 'Membro',
+      memberRole: 'Filtra per',
+      roleAll: 'Tutte (Coinvolto)',
+      rolePaidBy: 'Pagato dal membro',
+      roleOwedBy: 'Quota del membro',
       category: 'Categoria',
       all: 'Tutti',
       date: 'Data',
@@ -483,6 +491,10 @@ export const translations = {
       subtitle: 'Alle Transaktionen anzeigen',
       search: 'Suchen...',
       member: 'Mitglied',
+      memberRole: 'Filtern nach',
+      roleAll: 'Alle (Beteiligt)',
+      rolePaidBy: 'Bezahlt vom Mitglied',
+      roleOwedBy: 'Eigenanteil des Mitglieds',
       category: 'Kategorie',
       all: 'Alle',
       date: 'Datum',
@@ -669,6 +681,10 @@ export type Translations = {
     subtitle: string;
     search: string;
     member: string;
+    memberRole: string;
+    roleAll: string;
+    rolePaidBy: string;
+    roleOwedBy: string;
     category: string;
     all: string;
     date: string;

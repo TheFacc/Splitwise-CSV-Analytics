@@ -92,8 +92,11 @@ export interface CategoryGroup {
 export type CategoryRenames = Record<string, string>;
 
 // Filter state for the dashboard
+export type MemberFilterRole = 'all' | 'payer' | 'debtor';
+
 export interface FilterState {
   member: string | null;
+  memberRole?: MemberFilterRole;
   category: string | null;
   dateRange: { start: Date; end: Date } | null;
   showTransfers: boolean;

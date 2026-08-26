@@ -19,7 +19,7 @@ Fully responsive mobile-friendly view, with drag&drop features rethought as tap-
 - A variety of insightful analytics on categories, members, and group fairness.
 - Category customization (rename and merge) to personalize your analytics.
 - Multi-currency support with real-time exchange rate conversion.
-- Multi-language support (currently English and Italian).
+- Multi-language support (currently English, Italian, and German).
 
 ## How to Use It
 

@@ -24,7 +24,7 @@ import { Search, X, ArrowUpDown, ArrowLeftRight, HelpCircle, User, Users } from 
 import { useStore, useFilteredTransactions } from '../../store';
 import { formatCurrency, formatDate } from '../../utils/formatters';
 import { getTranslation } from '../../i18n/translations';
-import { Transaction } from '../../types';
+import { Transaction, MemberFilterRole } from '../../types';
 import { convertAmount } from '../../hooks/useCurrencyRates';
 
 interface ParticipantDetails {
@@ -98,14 +98,28 @@ export const TransactionsTable = () => {
   const displayedTransactions = useMemo(() => {
     let result = filteredTransactions;
 
-    // Local member filter
+    // Local member filter with role (all / payer / debtor)
     if (filters.member) {
-      result = result.filter(tx => Object.keys(tx.memberBalances).includes(filters.member!));
+      const role = filters.memberRole || 'all';
+      result = result.filter((tx) => {
+        const details = inferParticipantDetails(tx);
+        if (role === 'payer') {
+          return details.payers.some((p) => p.name === filters.member);
+        } else if (role === 'debtor') {
+          return details.debtors.some((d) => d.name === filters.member);
+        } else {
+          return (
+            Object.keys(tx.memberBalances).includes(filters.member!) ||
+            details.payers.some((p) => p.name === filters.member) ||
+            details.debtors.some((d) => d.name === filters.member)
+          );
+        }
+      });
     }
 
     // Local category filter
     if (filters.category) {
-      result = result.filter(tx => tx.category === filters.category);
+      result = result.filter((tx) => tx.category === filters.category);
     }
 
     // Search filter
@@ -126,7 +140,7 @@ export const TransactionsTable = () => {
     });
 
     return result;
-  }, [filteredTransactions, searchQuery, sortOrder, filters.member, filters.category]);
+  }, [filteredTransactions, searchQuery, sortOrder, filters.member, filters.memberRole, filters.category]);
 
   // Pagination
   const paginatedTransactions = useMemo(() => {
@@ -156,11 +170,16 @@ export const TransactionsTable = () => {
   };
 
   const handleClearFilters = () => {
-    setFilters({ member: null, category: null });
+    setFilters({ member: null, memberRole: 'all', category: null });
     setSearchQuery('');
   };
 
-  const hasActiveFilters = filters.member || filters.category || searchQuery;
+  const hasActiveFilters = Boolean(
+    filters.member ||
+    filters.category ||
+    searchQuery ||
+    (filters.memberRole && filters.memberRole !== 'all')
+  );
 
   // Render cell with list of names or count
   const renderParticipantCell = (
@@ -310,7 +329,7 @@ export const TransactionsTable = () => {
                 value={filters.member || ''}
                 label={t.transactions.member}
                 onChange={(e) => {
-                  setFilters({ member: e.target.value || null });
+                  setFilters({ member: e.target.value || null, memberRole: 'all' });
                   setPage(0);
                 }}
               >
@@ -322,6 +341,25 @@ export const TransactionsTable = () => {
                 ))}
               </Select>
             </FormControl>
+
+            {/* Member Role Filter */}
+            {filters.member && (
+              <FormControl size="small" sx={{ minWidth: 150, width: { xs: '100%', sm: 'auto' } }}>
+                <InputLabel>{t.transactions.memberRole}</InputLabel>
+                <Select
+                  value={filters.memberRole || 'all'}
+                  label={t.transactions.memberRole}
+                  onChange={(e) => {
+                    setFilters({ memberRole: e.target.value as MemberFilterRole });
+                    setPage(0);
+                  }}
+                >
+                  <MenuItem value="all">{t.transactions.roleAll}</MenuItem>
+                  <MenuItem value="payer">{t.transactions.rolePaidBy}</MenuItem>
+                  <MenuItem value="debtor">{t.transactions.roleOwedBy}</MenuItem>
+                </Select>
+              </FormControl>
+            )}
 
             {/* Category Filter */}
             <FormControl size="small" sx={{ minWidth: 140, width: { xs: '100%', sm: 'auto' } }}>
@@ -395,7 +433,7 @@ export const TransactionsTable = () => {
                   }}
                 >
                   <TableCell>
-                    <Typography variant="body2">{formatDate(tx.date, language === 'it' ? 'it-IT' : 'en-US')}</Typography>
+                    <Typography variant="body2">{formatDate(tx.date, language === 'it' ? 'it-IT' : language === 'de' ? 'de-DE' : 'en-US')}</Typography>
                   </TableCell>
                   <TableCell>
                     <Typography variant="body2" sx={{ maxWidth: 200 }} noWrap>

@@ -51,6 +51,7 @@ interface AppState {
 
 const initialFilters: FilterState = {
   member: null,
+  memberRole: 'all',
   category: null,
   dateRange: null,
   showTransfers: true,

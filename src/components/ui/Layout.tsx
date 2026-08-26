@@ -353,6 +353,21 @@ export const Layout = ({ children, currentPage, onPageChange }: LayoutProps) => 
                 },
               }}
             />
+            <Chip
+              label="DE"
+              size="small"
+              onClick={() => handleLanguageChange('de')}
+              sx={{
+                cursor: 'pointer',
+                bgcolor: language === 'de' ? 'primary.main' : 'transparent',
+                color: language === 'de' ? 'white' : 'text.primary',
+                border: 1,
+                borderColor: language === 'de' ? 'primary.main' : 'divider',
+                '&:hover': {
+                  bgcolor: language === 'de' ? 'primary.dark' : 'action.hover',
+                },
+              }}
+            />
           </Box>
         </Box>
 

@@ -14,6 +14,7 @@ interface FairnessIndexListProps {
  * Supports multi-currency with tabs when not converted - shows separate fairness per currency.
  */
 import { convertAmount } from '../../hooks/useCurrencyRates';
+import { formatCurrency } from '../../utils/formatters';
 
 export const FairnessIndexList: React.FC<FairnessIndexListProps> = ({
   memberStats,
@@ -38,7 +39,7 @@ export const FairnessIndexList: React.FC<FairnessIndexListProps> = ({
   }, [memberStats, propCurrencies]);
 
   const isConverted = preferredCurrency && exchangeRates;
-  const selectedCurrency = currencies[selectedCurrencyTab];
+  const selectedCurrency = currencies[selectedCurrencyTab] || currencies[0] || 'EUR';
 
   // Compute converted shares when conversion is active
   // This properly converts per-currency amounts before computing percentages
@@ -63,11 +64,13 @@ export const FairnessIndexList: React.FC<FairnessIndexListProps> = ({
     const grandTotalConsumed = convertedTotals.reduce((a, b) => a + b.consumed, 0);
     const grandTotalPaid = convertedTotals.reduce((a, b) => a + b.paid, 0);
 
-    const shareMap = new Map<string, { consumptionShare: number; paymentShare: number }>();
+    const shareMap = new Map<string, { consumptionShare: number; paymentShare: number; consumed: number; paid: number }>();
     convertedTotals.forEach(({ name, consumed, paid }) => {
       shareMap.set(name, {
         consumptionShare: grandTotalConsumed > 0 ? (consumed / grandTotalConsumed) * 100 : 0,
         paymentShare: grandTotalPaid > 0 ? (paid / grandTotalPaid) * 100 : 0,
+        consumed,
+        paid,
       });
     });
 
@@ -78,21 +81,31 @@ export const FairnessIndexList: React.FC<FairnessIndexListProps> = ({
   const getShares = (member: FairnessMemberStats) => {
     if (isConverted && convertedShares) {
       // Use properly converted shares
-      return convertedShares.get(member.name) || {
-        consumptionShare: 0,
-        paymentShare: 0,
+      const converted = convertedShares.get(member.name);
+      return {
+        consumptionShare: converted?.consumptionShare || 0,
+        paymentShare: converted?.paymentShare || 0,
+        consumed: converted?.consumed || 0,
+        paid: converted?.paid || 0,
+        displayCurrency: preferredCurrency!,
       };
     } else if (selectedCurrency && member.consumptionShareByCurrency && member.paymentShareByCurrency) {
       // Use per-currency shares
       return {
         consumptionShare: member.consumptionShareByCurrency[selectedCurrency] || 0,
         paymentShare: member.paymentShareByCurrency[selectedCurrency] || 0,
+        consumed: member.consumedByCurrency[selectedCurrency] || 0,
+        paid: member.paidByCurrency[selectedCurrency] || 0,
+        displayCurrency: selectedCurrency,
       };
     }
     // Fallback to overall shares
     return {
       consumptionShare: member.consumptionShare,
       paymentShare: member.paymentShare,
+      consumed: member.totalConsumed,
+      paid: member.totalPaid,
+      displayCurrency: currencies[0] || 'EUR',
     };
   };
 
@@ -144,7 +157,7 @@ export const FairnessIndexList: React.FC<FairnessIndexListProps> = ({
 
         {/* Member rows */}
         {memberStats.map((member) => {
-          const { consumptionShare, paymentShare } = getShares(member);
+          const { consumptionShare, paymentShare, consumed, paid, displayCurrency } = getShares(member);
           const difference = paymentShare - consumptionShare;
           const isOverpayer = difference > 0;
 
@@ -163,11 +176,11 @@ export const FairnessIndexList: React.FC<FairnessIndexListProps> = ({
                   variant="caption"
                   sx={{
                     color: isOverpayer ? paidColor : consumedColor,
-                    fontWeight: 500,
+                    fontWeight: 600,
                   }}
                 >
                   {isOverpayer ? '+' : ''}
-                  {difference.toFixed(1)}%
+                  {difference.toFixed(1)}% ({isOverpayer ? '+' : ''}{formatCurrency(paid - consumed, displayCurrency)})
                 </Typography>
               </Stack>
 
@@ -191,8 +204,8 @@ export const FairnessIndexList: React.FC<FairnessIndexListProps> = ({
                     }}
                   />
                 </Box>
-                <Typography variant="caption" sx={{ width: 40, textAlign: 'right', fontSize: '0.7rem' }}>
-                  {consumptionShare.toFixed(1)}%
+                <Typography variant="caption" sx={{ minWidth: 120, textAlign: 'right', fontSize: '0.7rem' }}>
+                  {consumptionShare.toFixed(1)}% ({formatCurrency(consumed, displayCurrency)})
                 </Typography>
               </Stack>
 
@@ -216,8 +229,8 @@ export const FairnessIndexList: React.FC<FairnessIndexListProps> = ({
                     }}
                   />
                 </Box>
-                <Typography variant="caption" sx={{ width: 40, textAlign: 'right', fontSize: '0.7rem' }}>
-                  {paymentShare.toFixed(1)}%
+                <Typography variant="caption" sx={{ minWidth: 120, textAlign: 'right', fontSize: '0.7rem' }}>
+                  {paymentShare.toFixed(1)}% ({formatCurrency(paid, displayCurrency)})
                 </Typography>
               </Stack>
             </Box>
